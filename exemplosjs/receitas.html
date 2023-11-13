@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Receitas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        h1 {
+            margin-left: 10px;
+        }
+        .container-fluid {
+            max-width: 100%;
+            margin: 0 10px 0 10px;
+            display: flex;
+            justify-content: left;
+            align-items: top;
+        }
+        .card {
+            margin: 8px;
+        }
+        .card img {
+            height: 150px;
+        }
+    </style>
+</head>
+<body onload="preencheCatalogo()">
+    <h1>Catálogo de Receitas</h1>
+    <div class="container-fluid bg-warning" id="pnlCatalogo" style="display: flex; flex-wrap: wrap;"></div>
+    <script>
+        const receitas = [
+            {
+                titulo: "Bolo de Chocolate",
+                imagem: "bolo-chocolate.jpg",
+                preparo: "Misture todos os ingredientes secos em uma tigela.<br>Adicione os ovos e a água, misture bem até obter uma massa homogênea.<br> Despeje a massa em uma forma untada e leve ao forno preaquecido a 180°C por 30 minutos.",
+                ingredientes: ["Farinha de trigo", "Açúcar", "Ovos", "Chocolate em pó", "Fermento em pó"]
+            },
+            {
+                titulo: "Salada de Frutas",
+                imagem: "salada-de-frutas.jpg",
+                preparo: "Corte todas as frutas em pedaços.<br> Misture as frutas em uma tigela grande.<br> Regue com mel e misture novamente antes de servir.",
+                ingredientes: ["Maçãs", "Bananas", "Morangos", "Uvas", "Mel"]
+            },
+            {
+                titulo: "Sopa de Legumes",
+                imagem: "sopa-legumes.jpg",
+                preparo: "Descasque e corte todos os legumes em pedaços pequenos.<br> Em uma panela grande, refogue a cebola até ficar macia.<br> Adicione os legumes e o caldo de legumes, deixe cozinhar por 20 minutos em fogo médio.",
+                ingredientes: ["Cenoura", "Abobrinha", "Batata", "Tomate", "Cebola"]
+            }
+        ];
+
+        function getListaIngredientes(receita) {
+            const listaHTML = "<ul>" +
+                receita.ingredientes.map(ingrediente => `<li>${ingrediente}</li>`).reduce((prev, current) => prev + current, "") +
+                "</ul>";
+            return listaHTML;
+        }
+        function getCard(receita) {
+            return `
+            <div class="card" style="width: 250px;">
+                <img src="img/${receita.imagem}" class="card-img-top" alt="Imagem da Receita">
+                <div class="card-body">
+                    <h5 class="card-title">${receita.titulo}</h5>
+                    <div class="card-text">${getListaIngredientes(receita)}</div>
+                    <hr>
+                    <p>${receita.preparo}</p>
+                </div>
+            </div>
+            `;
+        }
+        function preencheCatalogo() {
+            const pnlCatalogo = document.getElementById("pnlCatalogo");
+            const htmlText = receitas.map(receita => getCard(receita)).reduce((prev, current) => prev + current, "");
+            pnlCatalogo.innerHTML = htmlText;
+        }
+    </script>
+</body>
+</html>
